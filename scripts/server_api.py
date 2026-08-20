@@ -53,7 +53,7 @@ body {
 
 def create_studio_ui():
     """Build the unified multi-modal studio Gradio web interface."""
-    with gr.Blocks(title="Funzone Unified AI Studio", css=custom_css, theme=gr.themes.Soft()) as demo:
+    with gr.Blocks(title="Funzone Unified AI Studio") as demo:
         with gr.Column(elem_id="header-banner"):
             gr.Markdown("""
             # 🚀 Funzone Multi-Modal AI Studio
@@ -66,13 +66,9 @@ def create_studio_ui():
                 gr.Markdown("### 🤖 DeepSeek-R1 / Qwen Smart Multilingual AI")
                 chatbot = gr.ChatInterface(
                     fn=chat_response_handler,
-                    textbox=gr.Textbox(placeholder="Poocho code, text, or query (Hindi, Hinglish, English)... Press Enter or click Submit", lines=2),
-                    submit_btn="🚀 Send / Submit",
-                    stop_btn="⏹️ Stop",
-                    retry_btn="🔄 Retry",
-                    undo_btn="↩️ Undo",
-                    clear_btn="🗑️ Clear",
-                    description="Type your prompt and press Enter or click 'Send / Submit':"
+                    textbox=gr.Textbox(placeholder="Poocho code, text, or query (Hindi, Hinglish, English)... Press Enter to Submit", lines=2),
+                    title="",
+                    description="Type your prompt and press Enter to send:"
                 )
 
             # TAB 2: AI Image Generator (FLUX.1 / SDXL)
