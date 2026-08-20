@@ -20,11 +20,9 @@ def user_respond(user_message, history):
         return "", history
     try:
         response = code_engine.generate(user_message)
-        history.append({"role": "user", "content": user_message})
-        history.append({"role": "assistant", "content": response})
+        history.append((user_message, response))
     except Exception as e:
-        history.append({"role": "user", "content": user_message})
-        history.append({"role": "assistant", "content": f"⚠️ Error: {str(e)}"})
+        history.append((user_message, f"⚠️ Error: {str(e)}"))
     return "", history
 
 # Custom CSS for Premium Modern Aesthetics
@@ -71,7 +69,7 @@ def create_studio_ui():
             # TAB 1: Smart Text & Code AI (Hindi / Hinglish / English)
             with gr.TabItem("💬 Text & Code Assistant"):
                 gr.Markdown("### 🤖 DeepSeek-R1 / Qwen Smart Multilingual AI")
-                chatbot = gr.Chatbot(label="AI Conversation", height=450, type="messages")
+                chatbot = gr.Chatbot(label="AI Conversation", height=450)
                 with gr.Row():
                     msg_input = gr.Textbox(
                         placeholder="Poocho code, text, or query (Hindi, Hinglish, English)...",
