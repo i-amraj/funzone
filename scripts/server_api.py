@@ -66,8 +66,13 @@ def create_studio_ui():
                 gr.Markdown("### 🤖 DeepSeek-R1 / Qwen Smart Multilingual AI")
                 chatbot = gr.ChatInterface(
                     fn=chat_response_handler,
-                    textbox=gr.Textbox(placeholder="Poocho code, text, or query (Hindi, Hinglish, English)...", lines=2),
-                    description="Enter your coding or general prompt below:"
+                    textbox=gr.Textbox(placeholder="Poocho code, text, or query (Hindi, Hinglish, English)... Press Enter or click Submit", lines=2),
+                    submit_btn="🚀 Send / Submit",
+                    stop_btn="⏹️ Stop",
+                    retry_btn="🔄 Retry",
+                    undo_btn="↩️ Undo",
+                    clear_btn="🗑️ Clear",
+                    description="Type your prompt and press Enter or click 'Send / Submit':"
                 )
 
             # TAB 2: AI Image Generator (FLUX.1 / SDXL)
