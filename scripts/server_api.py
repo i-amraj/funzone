@@ -12,13 +12,20 @@ print("🚀 Initializing Unified AI Studio Server...")
 # Load Engine
 code_engine = TextCodeEngine()
 
-def chat_response_handler(message, history):
-    """Handler for live streaming chat in Gradio UI."""
+def user_respond(user_message, history):
+    """Process prompt and update chatbot history."""
+    if history is None:
+        history = []
+    if not user_message or not user_message.strip():
+        return "", history
     try:
-        response = code_engine.generate(message)
-        return response
+        response = code_engine.generate(user_message)
+        history.append({"role": "user", "content": user_message})
+        history.append({"role": "assistant", "content": response})
     except Exception as e:
-        return f"⚠️ Error generating response: {str(e)}"
+        history.append({"role": "user", "content": user_message})
+        history.append({"role": "assistant", "content": f"⚠️ Error: {str(e)}"})
+    return "", history
 
 # Custom CSS for Premium Modern Aesthetics
 custom_css = """
@@ -64,12 +71,22 @@ def create_studio_ui():
             # TAB 1: Smart Text & Code AI (Hindi / Hinglish / English)
             with gr.TabItem("💬 Text & Code Assistant"):
                 gr.Markdown("### 🤖 DeepSeek-R1 / Qwen Smart Multilingual AI")
-                chatbot = gr.ChatInterface(
-                    fn=chat_response_handler,
-                    textbox=gr.Textbox(placeholder="Poocho code, text, or query (Hindi, Hinglish, English)... Press Enter to Submit", lines=2),
-                    title="",
-                    description="Type your prompt and press Enter to send:"
-                )
+                chatbot = gr.Chatbot(label="AI Conversation", height=450, type="messages")
+                with gr.Row():
+                    msg_input = gr.Textbox(
+                        placeholder="Poocho code, text, or query (Hindi, Hinglish, English)...",
+                        lines=2,
+                        scale=8,
+                        show_label=False
+                    )
+                    send_btn = gr.Button("🚀 Send Message", variant="primary", scale=2)
+                
+                clear_btn = gr.Button("🗑️ Clear Chat History", size="sm")
+
+                # Event handlers for Submit (Enter key) and Click Send Button
+                msg_input.submit(user_respond, [msg_input, chatbot], [msg_input, chatbot])
+                send_btn.click(user_respond, [msg_input, chatbot], [msg_input, chatbot])
+                clear_btn.click(lambda: [], None, chatbot, queue=False)
 
             # TAB 2: AI Image Generator (FLUX.1 / SDXL)
             with gr.TabItem("🎨 Image Generator"):
