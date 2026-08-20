@@ -40,5 +40,14 @@ Follow these exact 3 simple steps to launch your **Smart Text, Coding & Hinglish
 
 ---
 
-## 📱 How to Use Your AI Studio Anywhere:
-Once Cell 5 finishes, you will see a public HTTPS URL (e.g., `https://xxxx.gradio.live` or Ngrok link). Open it on your **Mobile Phone, Tablet, or PC** to chat, write code, and generate text in English, Hindi, or Hinglish!
+## 🔄 AUTOMATIC LIVE CODE SYNC (0 Manual Work)
+
+Every time Antigravity AI updates any script or adds a feature, it automatically pushes to:
+👉 **[https://github.com/i-amraj/funzone](https://github.com/i-amraj/funzone)**
+
+In Google Colab, simply run this 1-line cell to pull the latest code directly into your 5TB Google Drive:
+
+```bash
+!cd /content/drive/MyDrive/Funzone_AI_Studio/funzone && git pull
+```
+
